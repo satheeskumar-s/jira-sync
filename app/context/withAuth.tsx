@@ -9,7 +9,7 @@ export function withAuth(Component: React.FC) {
     const auth = useAuth();
     const router = useRouter();
     const pathname = usePathname();
-    console.log(">>>> pathname", pathname);
+
     useEffect(() => {
       if (auth?.user) {
         // If logged in and on login page, redirect to dashboard
@@ -22,7 +22,7 @@ export function withAuth(Component: React.FC) {
           router.push("/login");
         }
       }
-    }, [auth?.user, pathname]);
+    }, [auth?.user, pathname, router]);
 
     // Prevent flickering while redirecting
     if (!auth?.user && pathname !== "/login") return null;
