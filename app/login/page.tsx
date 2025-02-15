@@ -53,14 +53,22 @@ const Login = () => {
                     <Label className="mb-1" htmlFor="name">
                       Domain
                     </Label>
-                    <Input id="name" placeholder="Type your jira domain" />
+                    <Input
+                      id="name"
+                      placeholder="Type your jira domain"
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
                     <p className="text-xs mt-0">www.aaa.sss</p>
                   </div>
                   <div className="flex flex-col my-4">
                     <Label className="mb-1" htmlFor="name">
                       Project
                     </Label>
-                    <Input id="name" placeholder="Name of your project" />
+                    <Input
+                      id="name"
+                      placeholder="Name of your project"
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
                   </div>
                 </div>
                 <div className="h-full bg-gray-200"></div>
