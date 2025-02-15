@@ -14,17 +14,18 @@ import {
 } from "@/components/ui/sidebar";
 import { Button } from "./button";
 import { useAuth } from "@/app/context/auth";
+import Link from "next/link";
 
 // Menu items.
 const items = [
   {
     title: "Time logs",
-    url: "#",
+    url: "/dashboard/time-log",
     icon: CalendarClock,
   },
   {
-    title: "Check existing issues",
-    url: "#",
+    title: "Open issues",
+    url: "/dashboard/open-issue",
     icon: ListTodo,
   },
 ];
@@ -41,10 +42,10 @@ export function AppSidebar() {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                    <Link href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
