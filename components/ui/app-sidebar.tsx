@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarClock, ListTodo } from "lucide-react";
+import { CalendarClock, ListTodo, ListCheck } from "lucide-react";
 
 import {
   Sidebar,
@@ -20,13 +20,18 @@ import Link from "next/link";
 const items = [
   {
     title: "Time logs",
-    url: "/dashboard/time-log",
+    url: "/dashboard/time-logs",
     icon: CalendarClock,
   },
   {
     title: "Open issues",
-    url: "/dashboard/open-issue",
+    url: "/dashboard/open-issues",
     icon: ListTodo,
+  },
+  {
+    title: "Check existing issues",
+    url: "/dashboard/existing-issues",
+    icon: ListCheck,
   },
 ];
 

@@ -15,6 +15,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -103,7 +108,34 @@ const Login = () => {
                 </div>
 
                 <div className="grid w-full max-w-sm items-center gap-1.5">
-                  <Label htmlFor="picture">Token</Label>
+                  <Label htmlFor="picture">
+                    Token
+                    <HoverCard>
+                      <HoverCardTrigger asChild>
+                        <span className="text-xs font-bold">{"  "}@help</span>
+                      </HoverCardTrigger>
+                      <HoverCardContent className="w-80">
+                        <div className="flex justify-between space-x-4">
+                          {/* <Avatar>
+                          <AvatarImage src="https://github.com/vercel.png" />
+                          <AvatarFallback>VC</AvatarFallback>
+                        </Avatar> */}
+                          <div className="space-y-1">
+                            <h4 className="text-sm font-semibold">
+                              Generate token
+                            </h4>
+                            <p className="text-sm">
+                              Create a token with less...
+                              <a href="aaa" target="_blank">
+                                aaa
+                              </a>
+                            </p>
+                          </div>
+                        </div>
+                      </HoverCardContent>
+                    </HoverCard>
+                  </Label>
+
                   <Input
                     id="token"
                     type="text"

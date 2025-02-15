@@ -8,7 +8,8 @@ const Dashboard = () => {
   const router = useRouter();
 
   useEffect(() => {
-    router.push("/dashboard/time-log"); // Or the actual path of your child page
+    router.push("/dashboard/time-logs");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return null;
