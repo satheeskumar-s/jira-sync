@@ -1,10 +1,12 @@
+import { JiraData } from "@/types/common";
 import { get } from "./api";
 
 export class Jira {
   private api;
   private project;
   private header;
-  constructor(domain: string, project: string, email: string, token: string) {
+  constructor(params: JiraData) {
+    const { domain, project, email, token } = params;
     this.project = project;
     this.api = `https://${domain}.atlassian.net/rest/api/3/`;
     this.header = {

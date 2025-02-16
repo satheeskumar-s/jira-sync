@@ -1,5 +1,11 @@
-export async function GET() {
-  const data = { a: 1, b: 2, c: "this is project routes" };
+import { Jira } from "@/helper/jira";
+import { JiraData } from "@/types/common";
 
-  return Response.json(data);
+export async function POST(request: Request) {
+  const input = await request.json();
+  const params: JiraData = input.params;
+  const jira = new Jira(params);
+  const project = await jira.getProject();
+
+  return Response.json(project);
 }

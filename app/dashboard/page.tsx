@@ -8,7 +8,7 @@ const Dashboard = () => {
   const router = useRouter();
 
   useEffect(() => {
-    router.push("/dashboard/time-logs");
+    router.push("/dashboard/existing-issues");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

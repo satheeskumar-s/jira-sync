@@ -19,6 +19,11 @@ import Link from "next/link";
 // Menu items.
 const items = [
   {
+    title: "Check existing issues",
+    url: "/dashboard/existing-issues",
+    icon: ListCheck,
+  },
+  {
     title: "Time logs",
     url: "/dashboard/time-logs",
     icon: CalendarClock,
@@ -27,11 +32,6 @@ const items = [
     title: "Open issues",
     url: "/dashboard/open-issues",
     icon: ListTodo,
-  },
-  {
-    title: "Check existing issues",
-    url: "/dashboard/existing-issues",
-    icon: ListCheck,
   },
 ];
 

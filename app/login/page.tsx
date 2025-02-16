@@ -46,7 +46,8 @@ const formSchema = z.object({
     })
     .min(1, {
       message: "Internal project is required.",
-    }),
+    })
+    .toUpperCase(),
   external_domain: z
     .string({
       required_error: "External domain is required.",
@@ -60,7 +61,8 @@ const formSchema = z.object({
     })
     .min(1, {
       message: "External project is required.",
-    }),
+    })
+    .toUpperCase(),
   email: z
     .string({
       required_error: "Email required.",
@@ -94,9 +96,7 @@ const Login = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    setIsFormSubmit(true);
+    setIsFormSubmit(false);
     const res = await auth?.login({
       internalDomain: values.internal_domain,
       internalProject: values.internal_project,
@@ -112,15 +112,6 @@ const Login = () => {
     if (res?.externalProjectError)
       setExternalProjectError("Cannot access external project");
   };
-
-  // const handleSubmit = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   const res = auth?.login(email, password);
-  //   if (res?.internalProjectError)
-  //     setInternalProjectError("Cannot access internal project");
-  //   if (res?.externalProjectError)
-  //     setExternalProjectError("Cannot access external project");
-  // };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
@@ -231,10 +222,10 @@ const Login = () => {
                         )}
                       />
                     </div>
+                    {externalProjectError && (
+                      <p className="text-red-500">{externalProjectError}</p>
+                    )}
                   </div>
-                  {externalProjectError && (
-                    <p className="text-red-500">{externalProjectError}</p>
-                  )}
                 </div>
                 <Separator className="my-4" />
                 <div className="flex flex-col justify-center items-center gap-4">

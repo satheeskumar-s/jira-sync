@@ -3,13 +3,18 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LoginInput } from "@/types/auth";
-import { Jira } from "@/helper/jira";
+import { ApiResponse, LocalJiraData } from "@/types/common";
+import {
+  getLoginInfo,
+  removeLoginInfo,
+  saveLoginInfo,
+} from "@/helper/localStorage";
 
 interface AuthContextType {
-  user: string | null;
+  user: LocalJiraData | null;
   login: (params: LoginInput) => Promise<{
-    internalProjectError: boolean;
-    externalProjectError: boolean;
+    internalProjectError?: boolean;
+    externalProjectError?: boolean;
   }>;
   logout: () => void;
 }
@@ -17,37 +22,67 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<string | null>(null);
+  const [user, setUser] = useState<LocalJiraData | null>(null);
   const router = useRouter();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = getLoginInfo();
     if (storedUser) setUser(storedUser);
+    else setUser(null);
   }, []);
 
   const login = async (params: LoginInput) => {
-    // if (email === "admin@example.com" && password === "password") {
-    //   localStorage.setItem("user", email);
-    //   setUser(email);
-    //   router.push("/dashboard");
-    //   return true;
-    // }
-    const internalJira = new Jira(
-      params.internalDomain,
-      params.internalProject,
-      params.email,
-      params.token,
-    );
-    const project = await internalJira.getProject();
-    console.log(">>>>> project", project);
+    const promise1 = await fetch("/api/jira/project", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        params: {
+          domain: params.internalDomain,
+          project: params.internalProject,
+          email: params.email,
+          token: params.token,
+        },
+      }),
+    });
+
+    const promise2 = await fetch("/api/jira/project", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        params: {
+          domain: params.externalDomain,
+          project: params.externalProject,
+          email: params.email,
+          token: params.token,
+        },
+      }),
+    });
+
+    const [internalJira, externalJira] = await Promise.all([
+      promise1,
+      promise2,
+    ]);
+
+    const internalJiraData: ApiResponse = await internalJira.json();
+    const externalJiraData: ApiResponse = await externalJira.json();
+
+    const internalProjectError = !!internalJiraData.error;
+    const externalProjectError = !!externalJiraData.error;
+
+    if (!internalProjectError && !externalProjectError) {
+      const data = saveLoginInfo(params);
+      setUser(data);
+      router.push("/dashboard");
+      return {};
+    }
     return {
-      internalProjectError: false,
-      externalProjectError: false,
+      internalProjectError,
+      externalProjectError,
     };
   };
 
   const logout = () => {
-    localStorage.removeItem("user");
+    removeLoginInfo();
     setUser(null);
     router.push("/login");
   };
