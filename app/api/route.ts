@@ -1,11 +1,7 @@
-// import { type NextRequest } from "next/server";
-// import { headers } from "next/headers";
+import { type NextRequest } from "next/server";
 
-// export async function GET(request: Request) {
-//   const headersList = await headers();
-//   const referer = headersList.get("referer");
+export async function GET(request: NextRequest) {
+  const token = request.cookies.get("token");
 
-//   return new Response("Hello, Next.js!", {
-//     status: 200,
-//   });
-// }
+  console.log(">>>", token);
+}

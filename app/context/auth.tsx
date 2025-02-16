@@ -7,10 +7,10 @@ import { Jira } from "@/helper/jira";
 
 interface AuthContextType {
   user: string | null;
-  login: (params: LoginInput) => {
+  login: (params: LoginInput) => Promise<{
     internalProjectError: boolean;
     externalProjectError: boolean;
-  };
+  }>;
   logout: () => void;
 }
 
