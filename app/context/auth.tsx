@@ -40,7 +40,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     );
     const project = await internalJira.getProject();
     console.log(">>>>> project", project);
-    return false;
+    return {
+      internalProjectError: false,
+      externalProjectError: false,
+    };
   };
 
   const logout = () => {
