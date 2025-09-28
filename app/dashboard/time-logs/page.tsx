@@ -129,7 +129,7 @@ const TimeLogTable: React.FC = () => {
       const minutes: number = timeToMinutes(timeStr);
       taskTotalMinutes += minutes;
       // The dailyTotals[day] is initialized as a number (0) above, so we cast to number when incrementing.
-      dailyTotals[day] = (dailyTotals[day] as unknown as number) + minutes;
+      dailyTotals[day] = `${(dailyTotals[day] as unknown as number) + minutes}`;
     });
 
     grandTotalMinutes += taskTotalMinutes;
