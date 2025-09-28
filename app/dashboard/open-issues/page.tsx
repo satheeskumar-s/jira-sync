@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 const OpenIssue = () => {
   return <h1> Open issue </h1>;
